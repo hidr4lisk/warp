@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description"
+        content="Hidr4lisk_Warp — Zero-config ephemeral P2P file sync and terminal chat. Run one script on two machines and they connect instantly.">
+    <title>Hidr4lisk_Warp // Ephemeral P2P</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Major+Mono+Display&family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <!-- ── Top bar ──────────────────────────────────────────────────── -->
+    <div class="top-bar" role="complementary" aria-label="System status">
+        <div class="top-bar__inner">
+            <div class="top-bar__left">
+                <span class="status-dot" aria-label="Online"></span>
+                <span class="top-bar__brand">Hidr4lisk_Warp</span>
+                <span class="top-bar__sep top-bar__hide-xs" aria-hidden="true">//</span>
+                <span class="top-bar__online top-bar__hide-xs">ONLINE</span>
+            </div>
+            <div class="top-bar__right">
+                <span class="top-bar__version top-bar__hide-sm">v2.0</span>
+                <span class="top-bar__sep top-bar__hide-sm" aria-hidden="true">|</span>
+                <span class="top-bar__sessions top-bar__hide-xs" aria-hidden="true">VISITS: <span class="vt323" id="visit-count">—</span></span>
+                <span class="top-bar__sep" aria-hidden="true">|</span>
+                <nav class="lang-toggle" aria-label="Language selector">
+                    <button class="lang-btn active" id="lang-en" onclick="setLang('en')" aria-pressed="true">EN</button>
+                    <span class="lang-sep" aria-hidden="true">/</span>
+                    <button class="lang-btn" id="lang-es" onclick="setLang('es')" aria-pressed="false">ES</button>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-wrapper" id="main-content">
+
+        <!-- ── Hero ─────────────────────────────────────────────────── -->
+        <header class="hero">
+            <div class="hero__text">
+                <p class="hero__eyebrow"><span data-i18n="hero_eyebrow">// EPHEMERAL · P2P · ZERO_KNOWLEDGE</span></p>
+                <h1 class="hero__title">Hidr4lisk_Warp</h1>
+                <p class="hero__subtitle" data-i18n="hero_subtitle">Zero-config encrypted sync between trusted nodes. No servers. No accounts. No traces.</p>
+                <div class="hero__about">
+                    <p class="hero__about-label section-eyebrow" data-i18n="about_heading">// ABOUT</p>
+                    <p class="hero__about-text" data-i18n-html="about_p1">Zero-config, <span class="accent-word">zero-knowledge</span> ephemeral P2P sync.</p>
+                    <p class="hero__about-text" data-i18n-html="about_p2">Generate a session. Copy the script on two machines.<br>They connect <span class="accent-word">instantly</span>. The broker sees nothing.</p>
+                    <p class="hero__about-text" data-i18n-html="about_p3">Close it — it's <span class="accent-word">gone</span>.</p>
+                    <p class="about-tags vt323">WARPv2 · AES-256-GCM · MQTT · open-source · MIT</p>
+                </div>
+            </div>
+
+            <div class="hero__generator">
+                <div class="generator-halo" aria-hidden="true"></div>
+                <div class="terminal-window">
+                    <div class="terminal-header">
+                        <span class="btn close" aria-hidden="true"></span>
+                        <span class="btn min" aria-hidden="true"></span>
+                        <span class="btn max" aria-hidden="true"></span>
+                        <span class="title">~/warp — session_generator</span>
+                    </div>
+                    <div class="terminal-body" id="terminal-output">
+                        <p class="user-input" id="terminal-init-line" data-i18n="terminal_init">&gt; Initialize secure session?</p>
+                    </div>
+                    <div class="action-container">
+                        <input type="text" id="broker-url" data-i18n-placeholder="broker_placeholder"
+                            placeholder="Custom Broker (optional, e.g.: my-server.com:1883)" class="cyber-input"
+                            aria-label="Custom broker address">
+                        <div class="action-buttons">
+                            <button id="generate-btn" class="cta-primary" aria-label="Generate session">
+                                <span data-i18n="btn_generate">GENERATE SESSION</span>
+                            </button>
+                            <a class="cta-secondary" href="https://github.com/hidr4lisk/warp" target="_blank" rel="noopener" aria-label="Read the documentation on GitHub">
+                                <span data-i18n="cta_secondary">READ THE DOCS →</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- ── Layout body (sidebar compat with generator.js) ───────── -->
+        <div class="layout-body">
+            <!-- Dummy carousel — kept for generator.js compatibility, hidden via CSS -->
+            <div class="carousel" aria-hidden="true" style="display:none">
+                <div class="carousel-track">
+                    <div class="carousel-slide"><div class="feature-card"></div></div>
+                    <div class="carousel-slide"><div class="feature-card"></div></div>
+                    <div class="carousel-slide"><div class="feature-card"></div></div>
+                </div>
+                <div class="carousel-dots">
+                    <button class="carousel-dot active" data-slide="0"></button>
+                    <button class="carousel-dot" data-slide="1"></button>
+                    <button class="carousel-dot" data-slide="2"></button>
+                </div>
+            </div>
+
+            <!-- Deploy sidebar shown post-generation -->
+            <section class="deploy-sidebar hidden" aria-label="Deployment info">
+                <p class="success-msg" data-i18n="success_msg">// Session keys injected. Node ready for deployment.</p>
+                <div class="sidebar-buttons">
+                    <button id="download-warp" class="cta-primary sidebar-btn sub-action" data-i18n="btn_download">↓ DOWNLOAD warp.py</button>
+                    <button id="reset-btn" class="cta-secondary sidebar-btn sub-action" data-i18n="btn_reset">↺ NEW SESSION</button>
+                </div>
+                <div class="protocol-note">
+                    <span class="note-label" data-i18n="protocol_label">// HOW IT WORKS</span>
+                    <span data-i18n="protocol_text">Files are chunked, encrypted (AES-256-GCM), and pushed over MQTT. Nodes identify by hostname. Keys never leave your machine. Shut it down — session is gone.</span>
+                </div>
+                <div class="contact-section">
+                    <a href="mailto:hidralisk.online@gmail.com" class="contact-btn" data-i18n="contact_text">Help us improve — send us your feedback: hidralisk.online@gmail.com</a>
+                </div>
+            </section>
+
+            <!-- Dummy panel-about for generator.js hide/show compat -->
+            <div class="panel-about" aria-hidden="true" style="display:none"></div>
+        </div>
+
+        <main>
+            <!-- ── Features ─────────────────────────────────────────── -->
+            <section class="features" aria-labelledby="features-label">
+                <p class="section-eyebrow" id="features-label" aria-hidden="true">// FEATURES</p>
+                <div class="features-grid">
+                    <article class="feature-card-new" data-animatable>
+                        <span class="feature-num vt323">// 01</span>
+                        <h2 class="feature-title" data-i18n="f1_title">ZERO_CONFIG</h2>
+                        <p class="feature-desc" data-i18n="f1_desc">No servers, no ports, no accounts. Generate keys and run.</p>
+                        <div class="feature-meta vt323" data-i18n="f1_meta">requires: python3</div>
+                    </article>
+                    <article class="feature-card-new" data-animatable>
+                        <span class="feature-num vt323">// 02</span>
+                        <h2 class="feature-title" data-i18n="f2_title">END_TO_END_ENCRYPTED</h2>
+                        <p class="feature-desc" data-i18n="f2_desc">AES-256-GCM with per-session ephemeral keys. The broker sees nothing.</p>
+                        <div class="feature-meta vt323" data-i18n="f2_meta">cipher: AES-256-GCM</div>
+                    </article>
+                    <article class="feature-card-new" data-animatable>
+                        <span class="feature-num vt323">// 03</span>
+                        <h2 class="feature-title" data-i18n="f3_title">ONE_SCRIPT_TWO_NODES</h2>
+                        <p class="feature-desc" data-i18n="f3_desc">Same file, both ends. Drop it in the folder you want to sync and run.</p>
+                        <div class="feature-meta vt323" data-i18n="f3_meta">transport: MQTT</div>
+                    </article>
+                </div>
+            </section>
+
+<!-- ── How it works ──────────────────────────────────────── -->
+            <section class="how-it-works" aria-labelledby="how-label">
+                <p class="section-eyebrow" id="how-label" data-i18n="howto_heading">// HOW IT WORKS</p>
+                <div class="how-it-works__layout">
+                    <svg class="how-diagram" viewBox="0 0 560 120" role="img" aria-label="Network diagram: Node A and Node B exchange encrypted data bidirectionally through a blind broker">
+                        <g class="diagram-node" transform="translate(0,32)">
+                            <rect x="0" y="0" width="120" height="56" rx="1"/>
+                            <text x="60" y="24" text-anchor="middle" class="node-label">NODE_A</text>
+                            <circle cx="60" cy="42" r="5" class="node-pulse"/>
+                        </g>
+                        <!-- A→Broker (top) -->
+                        <line x1="120" y1="52" x2="216" y2="52" class="data-line" stroke-dasharray="6 4"/>
+                        <polygon points="214,46 224,52 214,58" class="arrow-head"/>
+                        <!-- Broker→A (bottom) -->
+                        <line x1="224" y1="68" x2="128" y2="68" class="data-line-back"/>
+                        <polygon points="130,62 120,68 130,74" class="arrow-head"/>
+
+                        <g class="diagram-node" transform="translate(224,32)">
+                            <rect x="0" y="0" width="112" height="56" rx="1"/>
+                            <text x="56" y="22" text-anchor="middle" class="node-label">BROKER</text>
+                            <text x="56" y="40" text-anchor="middle" class="node-sublabel">(blind)</text>
+                        </g>
+                        <!-- Broker→B (top) -->
+                        <line x1="336" y1="52" x2="432" y2="52" class="data-line" stroke-dasharray="6 4"/>
+                        <polygon points="430,46 440,52 430,58" class="arrow-head"/>
+                        <!-- B→Broker (bottom) -->
+                        <line x1="440" y1="68" x2="344" y2="68" class="data-line-back"/>
+                        <polygon points="346,62 336,68 346,74" class="arrow-head"/>
+
+                        <g class="diagram-node" transform="translate(440,32)">
+                            <rect x="0" y="0" width="120" height="56" rx="1"/>
+                            <text x="60" y="24" text-anchor="middle" class="node-label">NODE_B</text>
+                            <circle cx="60" cy="42" r="5" class="node-pulse"/>
+                        </g>
+                        <text x="280" y="110" text-anchor="middle" class="node-sublabel">encrypted blobs both ways</text>
+                    </svg>
+                    <ul class="how-bullets">
+                        <li><span class="bullet-arrow" aria-hidden="true">▸</span> <span data-i18n="how_bullet_1">files chunked → encrypted → relayed</span></li>
+                        <li><span class="bullet-arrow" aria-hidden="true">▸</span> <span data-i18n="how_bullet_2">nodes identify by hostname</span></li>
+                        <li><span class="bullet-arrow" aria-hidden="true">▸</span> <span data-i18n="how_bullet_3">keys never leave your machine</span></li>
+                        <li><span class="bullet-arrow" aria-hidden="true">▸</span> <span data-i18n="how_bullet_4">shutdown → session vanishes</span></li>
+                    </ul>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- ── Footer ─────────────────────────────────────────────────── -->
+        <footer>
+            <div class="footer__grid">
+                <div class="footer__col">
+                    <p class="footer__brand">Hidr4lisk_Warp</p>
+                    <p class="footer__tagline">ephemeral p2p sync</p>
+                    <p class="footer__author">— federico furgiuele</p>
+                </div>
+                <div class="footer__col">
+                    <p class="footer__label">// SOURCE</p>
+                    <a href="https://github.com/hidr4lisk/warp" target="_blank" rel="noopener" class="footer__link">github.com/hidr4lisk/warp</a>
+                    <p class="footer__label">// SOCIAL</p>
+                    <a href="https://linkedin.com/in/federico-furgiuele" target="_blank" rel="noopener" class="footer__link">linkedin / federico-furgiuele</a>
+                    <a href="https://instagram.com/hidralisk.online" target="_blank" rel="noopener" class="footer__link">instagram / hidralisk.online</a>
+                    <p class="footer__label">// CONTACT</p>
+                    <a href="mailto:hidralisk.online@gmail.com" class="footer__link">hidralisk.online@gmail.com</a>
+                </div>
+                <div class="footer__col">
+                    <p class="footer__label">// STATUS</p>
+                    <p class="footer__status vt323" data-i18n="status_routing">ROUTING: test.mosquitto.org</p>
+                    <p class="footer__status vt323">v2.0 · build 2026.05</p>
+                    <p class="footer__status" data-i18n="disclaimer1">secure sync between trusted nodes</p>
+                    <p class="footer__status" data-i18n="disclaimer2">work in progress · use at your own risk</p>
+                    <a href="https://github.com/hidr4lisk/warp/blob/main/LICENSE" target="_blank" rel="noopener" class="footer__license">[MIT LICENSE]</a>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p class="vt323 footer__sys">[SYS] connection closed. session terminated. <span class="footer__blink">████</span></p>
+            </div>
+        </footer>
+
+    </div><!-- /page-wrapper -->
+
+    <template id="deploy-content">
+        <div class="steps">
+            <div class="step">
+                <span class="step-num">01</span>
+                <div class="step-body">
+                    <p data-i18n-html="step1_desc">Copy <code class="inline">warp.py</code> into the folder you want to sync on <strong>each machine</strong>.</p>
+                </div>
+            </div>
+            <div class="step">
+                <span class="step-num">02</span>
+                <div class="step-body">
+                    <p data-i18n="step2_desc">Create a virtual environment and install the 3 dependencies:</p>
+                    <div class="code-container">
+                        <code class="block" id="cmd-install">
+python3 -m venv .venv<br>
+source .venv/bin/activate<br>
+pip install paho-mqtt cryptography watchdog
+                        </code>
+                        <button class="copy-btn" onclick="copyToClipboard('cmd-install', this)">Copy</button>
+                    </div>
+                </div>
+            </div>
+            <div class="step">
+                <span class="step-num">03</span>
+                <div class="step-body">
+                    <p data-i18n="step3_desc">Run the node. That's it.</p>
+                    <div class="code-container">
+                        <code class="block" id="cmd-run">python3 warp.py</code>
+                        <button class="copy-btn" onclick="copyToClipboard('cmd-run', this)">Copy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script src="generator.js"></script>
+    <script src="index.js"></script>
+</body>
+
+</html>
