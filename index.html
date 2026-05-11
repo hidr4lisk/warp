@@ -39,6 +39,17 @@
         </div>
     </div>
 
+    <!-- ── Windows announcement strip ──────────────────────────────── -->
+    <div class="win-announce" role="note" aria-label="Windows support announcement">
+        <div class="win-announce__inner">
+            <span class="win-announce__badge vt323">NEW</span>
+            <span class="win-announce__sep" aria-hidden="true">·</span>
+            <span class="win-announce__msg" data-i18n="win_bar_msg">Windows GUI now available</span>
+            <span class="win-announce__sep" aria-hidden="true">·</span>
+            <a href="#windows" class="win-announce__cta" data-i18n="win_bar_cta">↓ download</a>
+        </div>
+    </div>
+
     <div class="page-wrapper" id="main-content">
 
         <!-- ── Hero ─────────────────────────────────────────────────── -->
@@ -122,6 +133,68 @@
         </div>
 
         <main>
+            <!-- ── Windows launch ───────────────────────────────────── -->
+            <section class="win-launch" id="windows" aria-labelledby="win-label">
+                <p class="section-eyebrow" id="win-label">// WINDOWS</p>
+                <div class="win-launch__layout">
+
+                    <div class="win-launch__copy">
+                        <div class="win-launch__new vt323" data-i18n="win_new_badge">// NEW RELEASE</div>
+                        <h2 class="win-launch__title" data-i18n="win_title">Now on Windows.</h2>
+                        <p class="win-launch__sub" data-i18n-html="win_sub">Same session. Same encryption. Same <code class="inline">warp.py</code>.<br>Now with a native GUI — chat, drag-and-drop, and a PORTAL.</p>
+                        <ul class="win-launch__bullets">
+                            <li><span class="win-bullet-portal">◈</span> PORTAL drop zone — drag files to send instantly</li>
+                            <li><span class="bullet-arrow">▸</span> Chat + file history in separate panels</li>
+                            <li><span class="bullet-arrow">▸</span> Cross-compatible with the terminal version</li>
+                            <li><span class="bullet-arrow">▸</span> One zip, one exe — no setup</li>
+                        </ul>
+                        <div class="win-launch__actions">
+                            <a href="https://github.com/hidr4lisk/warp/releases/latest"
+                               class="cta-primary" target="_blank" rel="noopener"
+                               data-i18n="win_download_btn">↓ DOWNLOAD FOR WINDOWS</a>
+                        </div>
+                        <p class="win-launch__note vt323" data-i18n="win_note">v1.0 · place warp.py next to the exe · AES-256-GCM</p>
+                    </div>
+
+                    <div class="win-launch__preview" aria-hidden="true">
+                        <div class="win-mockup">
+                            <div class="win-mockup__bar">
+                                <span class="btn close"></span>
+                                <span class="btn min"></span>
+                                <span class="btn max"></span>
+                                <span class="title">Hidr4lisk_WARP &nbsp;●&nbsp; DESKTOP-XK9</span>
+                            </div>
+                            <div class="win-mockup__body">
+                                <div class="win-mockup__chat">
+                                    <div class="wm-label">CHAT</div>
+                                    <div class="wm-line wm-sys">Session a3f8c1… &nbsp;Node: DESKTOP-XK9</div>
+                                    <div class="wm-line wm-sys">● Peer online: LAPTOP-7F2</div>
+                                    <div class="wm-line wm-me">&lt;DESKTOP-XK9&gt; ready to sync</div>
+                                    <div class="wm-line wm-peer">&lt;LAPTOP-7F2&gt; sending now</div>
+                                    <div class="wm-line wm-sys">[received] budget.xlsx → received/</div>
+                                </div>
+                                <div class="win-mockup__portal">
+                                    <div class="wm-label">PORTAL</div>
+                                    <div class="wm-portal-icon">◈</div>
+                                    <div class="wm-portal-hint">drop files here</div>
+                                    <div class="wm-portal-browse">[ BROWSE ]</div>
+                                </div>
+                            </div>
+                            <div class="win-mockup__input">
+                                <div class="wm-input-field">type to chat...</div>
+                                <div class="wm-send">SEND</div>
+                            </div>
+                            <div class="win-mockup__history">
+                                <span class="wm-hist-label">FILE HISTORY</span>
+                                <span class="wm-hist-item">✓ ↑&nbsp; report.pdf</span>
+                                <span class="wm-hist-item">✓ ↓&nbsp; budget.xlsx</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
             <!-- ── Features ─────────────────────────────────────────── -->
             <section class="features" aria-labelledby="features-label">
                 <p class="section-eyebrow" id="features-label" aria-hidden="true">// FEATURES</p>

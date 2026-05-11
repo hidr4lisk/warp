@@ -15,6 +15,13 @@
 // ── Extra i18n keys not present in generator.js translations ────────
 const extraTranslations = {
     en: {
+        win_bar_msg:      'Windows GUI now available',
+        win_bar_cta:      '↓ download',
+        win_new_badge:    '// NEW RELEASE',
+        win_title:        'Now on Windows.',
+        win_sub:          'Same session. Same encryption. Same <code class="inline">warp.py</code>.<br>Now with a native GUI — chat, drag-and-drop, and a PORTAL.',
+        win_download_btn: '↓ DOWNLOAD FOR WINDOWS',
+        win_note:         'v1.0 · place warp.py next to the exe · AES-256-GCM',
         hero_eyebrow:  '// EPHEMERAL · P2P · ZERO_KNOWLEDGE',
         hero_subtitle: 'Zero-config encrypted sync between trusted nodes. No servers. No accounts. No traces.',
         cta_secondary: 'READ THE DOCS →',
@@ -33,6 +40,13 @@ const extraTranslations = {
         about_p3: 'Close it — it\'s <span class="accent-word">gone</span>.',
     },
     es: {
+        win_bar_msg:      'GUI para Windows disponible',
+        win_bar_cta:      '↓ descargar',
+        win_new_badge:    '// NUEVO',
+        win_title:        'Ahora en Windows.',
+        win_sub:          'Misma sesión. Mismo cifrado. Mismo <code class="inline">warp.py</code>.<br>Ahora con interfaz gráfica — chat, drag-and-drop y un PORTAL.',
+        win_download_btn: '↓ DESCARGAR PARA WINDOWS',
+        win_note:         'v1.0 · colocá warp.py al lado del exe · AES-256-GCM',
         hero_eyebrow:  '// EFÍMERO · P2P · CONOCIMIENTO_CERO',
         hero_subtitle: 'Sincronización cifrada sin configuración entre nodos confiables. Sin servidores. Sin cuentas. Sin rastros.',
         cta_secondary: 'LEER LOS DOCS →',

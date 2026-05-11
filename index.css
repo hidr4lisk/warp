@@ -911,3 +911,309 @@ footer {
     .generator-halo { inset: -10%; }
 }
 
+/* ── Windows announcement strip ─────────────────────────────────────── */
+.win-announce {
+    position: sticky;
+    top: 36px;
+    z-index: 199;
+    height: 38px;
+    background: rgba(10, 11, 12, 0.95);
+    border-bottom: 1px solid var(--accent);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    overflow: hidden;
+}
+
+.win-announce__inner {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding-inline: var(--page-pad);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--s-3);
+}
+
+.win-announce__badge {
+    background: var(--accent);
+    color: var(--bg-base);
+    font-size: var(--t-sm);
+    padding: 0 8px;
+    letter-spacing: 0.12em;
+    line-height: 1.6;
+}
+
+.win-announce__sep { color: var(--border-strong); font-size: var(--t-xs); }
+
+.win-announce__msg {
+    color: var(--text-secondary);
+    font-size: var(--t-xs);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.win-announce__cta {
+    color: var(--accent);
+    font-size: var(--t-xs);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent-dim);
+    padding-bottom: 1px;
+    transition: color var(--dur-fast);
+}
+@media (hover: hover) { .win-announce__cta:hover { color: var(--text-primary); } }
+
+/* ── Windows launch section ─────────────────────────────────────────── */
+.win-launch {
+    padding-block: var(--s-8) var(--s-7);
+    border-top: 1px solid var(--border-subtle);
+    position: relative;
+    overflow: hidden;
+}
+
+.win-launch::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 700px;
+    height: 240px;
+    background: radial-gradient(ellipse at top, var(--accent-glow) 0%, transparent 70%);
+    filter: blur(50px);
+    pointer-events: none;
+    opacity: 0.25;
+}
+
+.win-launch__layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--s-7);
+    align-items: center;
+}
+
+@media (min-width: 900px) {
+    .win-launch__layout { grid-template-columns: 1fr 1fr; }
+}
+
+.win-launch__new {
+    font-size: var(--t-lg);
+    color: var(--accent);
+    letter-spacing: 0.16em;
+    margin-bottom: var(--s-3);
+    opacity: 0.8;
+}
+
+.win-launch__title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    margin-bottom: var(--s-4);
+}
+
+.win-launch__sub {
+    color: var(--text-secondary);
+    font-size: var(--t-base);
+    line-height: 1.65;
+    margin-bottom: var(--s-5);
+    max-width: 48ch;
+}
+
+.win-launch__bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
+    margin-bottom: var(--s-6);
+    color: var(--text-secondary);
+    font-size: var(--t-sm);
+}
+
+.win-bullet-portal {
+    color: var(--accent);
+    margin-right: var(--s-2);
+    font-size: 1.1em;
+}
+
+.win-launch__actions {
+    margin-bottom: var(--s-4);
+}
+
+.win-launch__note {
+    color: var(--text-tertiary);
+    font-size: var(--t-sm);
+    letter-spacing: 0.1em;
+}
+
+/* ── Windows app mockup ─────────────────────────────────────────────── */
+.win-mockup {
+    background: rgba(6, 10, 8, 0.98);
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-1);
+    overflow: hidden;
+    box-shadow:
+        0 0 0 1px var(--border-subtle),
+        0 28px 56px -16px rgba(0, 0, 0, 0.75),
+        0 0 80px rgba(0, 255, 136, 0.06);
+    font-family: var(--font-mono);
+}
+
+.win-mockup__bar {
+    background: #0d0d0d;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex;
+    align-items: center;
+}
+
+.win-mockup__body {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.win-mockup__chat {
+    padding: var(--s-3) var(--s-4);
+    border-right: 1px solid var(--border-subtle);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-height: 180px;
+}
+
+.wm-label {
+    font-size: var(--t-xs);
+    color: #00ffaa;
+    letter-spacing: 0.16em;
+    font-weight: 700;
+    margin-bottom: var(--s-2);
+}
+
+.wm-line {
+    font-size: 0.7rem;
+    line-height: 1.55;
+}
+
+.wm-sys  { color: var(--text-tertiary); }
+.wm-me   { color: #00ff88; }
+.wm-peer { color: #ffe066; }
+
+.win-mockup__portal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--s-4) var(--s-3);
+    background: #030f07;
+    gap: 4px;
+    border: 2px solid #005533;
+    animation: portal-border-pulse 1.4s ease-in-out infinite;
+}
+
+.wm-portal-icon {
+    font-size: 2.6rem;
+    line-height: 1;
+    animation: portal-icon-pulse 1.4s ease-in-out infinite;
+}
+
+.wm-portal-hint {
+    font-size: 0.65rem;
+    color: var(--text-tertiary);
+    letter-spacing: 0.06em;
+}
+
+.wm-portal-browse {
+    font-size: 0.62rem;
+    color: #00ff88;
+    border: 1px solid #005533;
+    padding: 2px 7px;
+    margin-top: var(--s-2);
+    cursor: default;
+    letter-spacing: 0.06em;
+}
+
+.win-mockup__input {
+    display: flex;
+    align-items: center;
+    padding: var(--s-2) var(--s-4);
+    border-bottom: 1px solid var(--border-subtle);
+    gap: var(--s-3);
+}
+
+.wm-input-field {
+    flex: 1;
+    background: #161616;
+    border: 1px solid var(--border-subtle);
+    color: var(--text-disabled);
+    font-size: 0.7rem;
+    padding: 4px 8px;
+    font-family: var(--font-mono);
+}
+
+.wm-send {
+    background: #004428;
+    color: #00ff88;
+    font-size: 0.65rem;
+    padding: 4px 12px;
+    letter-spacing: 0.1em;
+    cursor: default;
+}
+
+.win-mockup__history {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--s-4);
+    padding: var(--s-2) var(--s-4);
+}
+
+.wm-hist-label {
+    font-size: 0.6rem;
+    color: var(--text-tertiary);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.wm-hist-item {
+    font-size: 0.68rem;
+    color: #00ff88;
+}
+
+/* ── Portal animations ──────────────────────────────────────────────── */
+@keyframes portal-icon-pulse {
+    0%, 100% {
+        color: #00ff88;
+        text-shadow: 0 0 24px rgba(0, 255, 136, 1), 0 0 48px rgba(0, 255, 136, 0.5);
+    }
+    50% {
+        color: #00bb60;
+        text-shadow: 0 0 10px rgba(0, 187, 96, 0.4), 0 0 20px rgba(0, 187, 96, 0.2);
+    }
+}
+
+@keyframes portal-border-pulse {
+    0%, 100% { border-color: #00ff88; box-shadow: inset 0 0 20px rgba(0, 255, 136, 0.08); }
+    50%       { border-color: #004422; box-shadow: inset 0 0 6px rgba(0, 255, 136, 0.03); }
+}
+
+/* ── Windows responsive ─────────────────────────────────────────────── */
+@media (max-width: 640px) {
+    /* Hide mockup — text + download button is enough on mobile */
+    .win-launch__preview { display: none; }
+
+    /* Reduce section padding on mobile */
+    .win-launch { padding-block: var(--s-6) var(--s-5); }
+}
+
+@media (max-width: 499px) {
+    /* Announcement strip: strip down to [NEW] + ↓ download only */
+    .win-announce__msg,
+    .win-announce__sep { display: none; }
+    .win-announce { height: 32px; }
+    .win-announce__inner { gap: var(--s-3); }
+}
+
