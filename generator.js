@@ -22,7 +22,7 @@ const translations = {
         disclaimer1: 'Secure sync between trusted nodes.',
         disclaimer2: 'Work in progress. Use at your own risk.',
         status_generating: '>> Generating session...',
-        status_routing: 'ROUTING: test.mosquitto.org',
+        status_routing: 'ROUTING: broker.hivemq.com',
         status_encryption: 'ENCRYPTION: AES-256-GCM',
         broker_placeholder: 'Custom Broker (optional, e.g.: my-server.com:1883)',
         copied: 'Copied!',
@@ -61,7 +61,7 @@ const translations = {
         disclaimer1: 'Sincronización segura entre nodos de confianza.',
         disclaimer2: 'En desarrollo. Usalo bajo tu propio riesgo.',
         status_generating: '>> Generando sesión...',
-        status_routing: 'ENRUTAMIENTO: test.mosquitto.org',
+        status_routing: 'ENRUTAMIENTO: broker.hivemq.com',
         status_encryption: 'CIFRADO: AES-256-GCM',
         broker_placeholder: 'Broker personalizado (opcional, ej: mi-servidor.com:1883)',
         copied: '¡Copiado!',
@@ -139,7 +139,7 @@ function generateSecretKey() {
 }
 
 function parseBrokerInput(raw) {
-    if (!raw) return { url: 'test.mosquitto.org', port: 1883 };
+    if (!raw) return { url: 'broker.hivemq.com', port: 1883 };
     if (raw.includes(':')) {
         const [url, rawPort] = raw.split(':');
         return { url, port: parseInt(rawPort) || 1883 };

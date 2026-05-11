@@ -36,7 +36,7 @@ python3 warp.py
 > Run these commands inside the folder you want to sync on **each machine**.
 
 ### Limitations / Known issues
-- Uses test.mosquitto.org as public broker — not for sensitive data in production
+- Uses broker.hivemq.com as public broker — not for sensitive data in production
 - Single-folder sync only (no recursion)
 - No resume on interrupted transfer (WIP)
 
@@ -83,7 +83,7 @@ python3 warp.py
 | `watchdog` | Eventos nativos del sistema de archivos |
 
 ### Limitaciones / Problemas conocidos
-- Usa test.mosquitto.org como broker público — no apto para datos sensibles en producción
+- Usa broker.hivemq.com como broker público — no apto para datos sensibles en producción
 - Sincronización de una sola carpeta (sin recursión)
 - Sin reanudación en transferencias interrumpidas (WIP)
 

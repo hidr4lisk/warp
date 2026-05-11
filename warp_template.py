@@ -110,15 +110,10 @@ def log(color, symbol, msg):
 
 
 def print_banner():
-    safe_print(f"{B}{G}"
-          "\n"
-          "██╗    ██╗ █████╗ ██████╗ ██████╗ \n"
-          "██║    ██║██╔══██╗██╔══██╗██╔══██╗\n"
-          "██║ █╗ ██║███████║██████╔╝██████╔╝\n"
-          "██║███╗██║██╔══██║██╔══██╗██╔═══╝ \n"
-          "╚███╔███╔╝██║  ██║██║  ██║██║     \n"
-          " ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝     \n"
-          f"   BY FEDERICO FURGIUELE   {RS}")
+    safe_print(f"\n{B}{G}  ╔══════════════════════════════╗")
+    safe_print(f"  ║   HIDRALISK_WARP  v2.0       ║")
+    safe_print(f"  ║   by Federico Furgiuele       ║")
+    safe_print(f"  ╚══════════════════════════════╝{RS}")
     _print_panel()
 
 
@@ -607,7 +602,7 @@ def main():
         except (AttributeError, ValueError):
             pass
 
-    # Resolve to IPv4 explicitly — test.mosquitto.org returns IPv6 first,
+    # Resolve to IPv4 explicitly — some brokers return IPv6 first,
     # which fails with ENETUNREACHABLE on networks without IPv6 routing.
     try:
         broker_ip = socket.getaddrinfo(BROKER_URL, BROKER_PORT, socket.AF_INET)[0][4][0]
