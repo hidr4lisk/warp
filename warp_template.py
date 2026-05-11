@@ -112,7 +112,7 @@ def log(color, symbol, msg):
 def print_banner():
     safe_print(f"\n{B}{G}  ╔══════════════════════════════╗")
     safe_print(f"  ║   HIDRALISK_WARP  v2.0       ║")
-    safe_print(f"  ║   by Federico Furgiuele       ║")
+    safe_print(f"  ║   by Federico Furgiuele      ║")
     safe_print(f"  ╚══════════════════════════════╝{RS}")
     _print_panel()
 
@@ -341,7 +341,7 @@ class WARPHandler(FileSystemEventHandler):
     def _trigger_sync(self, path: str):
         name = Path(path).name
         with file_lock:
-            if name in _sending_files:
+            if name in _sending_files or name in _recently_received:
                 return
             _sending_files[name] = time.time()
 
