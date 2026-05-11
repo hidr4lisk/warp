@@ -607,11 +607,18 @@ def main():
         except (AttributeError, ValueError):
             pass
 
+    # Resolve to IPv4 explicitly — test.mosquitto.org returns IPv6 first,
+    # which fails with ENETUNREACHABLE on networks without IPv6 routing.
+    try:
+        broker_ip = socket.getaddrinfo(BROKER_URL, BROKER_PORT, socket.AF_INET)[0][4][0]
+    except Exception:
+        broker_ip = BROKER_URL
+
     retry_delay  = 1
     max_attempts = 10
     for attempt in range(max_attempts):
         try:
-            client.connect(BROKER_URL, BROKER_PORT, 60)
+            client.connect(broker_ip, BROKER_PORT, 60)
             break
         except Exception as e:
             log(R, '!', f"Link down ({attempt + 1}/{max_attempts}): {e}. "
