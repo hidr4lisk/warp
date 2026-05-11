@@ -35,12 +35,32 @@ python3 warp.py
 
 > Run these commands inside the folder you want to sync on **each machine**.
 
+### Windows GUI
+
+A native graphical interface for Windows is now available — same protocol, same `warp.py`, no terminal needed.
+
+**How it works:**
+1. Generate a session on the [web generator](https://hidr4lisk.github.io/warp/) and download `warp.py` as usual.
+2. Download `Hidr4lisk_WARP_windows_v1.0.zip` from [Releases](https://github.com/hidr4lisk/warp/releases).
+3. Place `warp.py` in the same folder as `Hidr4lisk_WARP_windows.exe`.
+4. Double-click the exe — chat and file transfer with a GUI.
+
+**PORTAL** — drag files directly onto the drop zone to send them instantly. Received files are saved in a `received/` subfolder.
+
+The Windows GUI is fully cross-compatible with the terminal version: one side can run the exe while the other runs `warp.py` in a terminal — same session, same encryption.
+
+**Dependencies (installed automatically via pip when building from source):**
+```
+pip install paho-mqtt cryptography tkinterdnd2
+```
+
 ### Limitations / Known issues
 - Uses broker.hivemq.com as public broker — not for sensitive data in production
 - Single-folder sync only (no recursion)
 - No resume on interrupted transfer (WIP)
 
 ### Roadmap
+- [x] Windows GUI with drag-and-drop PORTAL
 - [ ] Recursive folder sync
 - [ ] File resume
 
@@ -82,12 +102,27 @@ python3 warp.py
 | `cryptography` | Cifrado AES-256-GCM |
 | `watchdog` | Eventos nativos del sistema de archivos |
 
+### GUI para Windows
+
+Ahora disponible una interfaz gráfica nativa para Windows — mismo protocolo, mismo `warp.py`, sin terminal.
+
+**Cómo usarla:**
+1. Generá una sesión en el [generador web](https://hidr4lisk.github.io/warp/) y descargá `warp.py` como siempre.
+2. Descargá `Hidr4lisk_WARP_windows_v1.0.zip` desde [Releases](https://github.com/hidr4lisk/warp/releases).
+3. Colocá `warp.py` en la misma carpeta que `Hidr4lisk_WARP_windows.exe`.
+4. Doble clic en el exe — chat y transferencia de archivos con interfaz gráfica.
+
+**PORTAL** — arrastrá archivos a la zona de drop para enviarlos al instante. Los archivos recibidos se guardan en la carpeta `received/`.
+
+La GUI de Windows es totalmente compatible con la versión terminal: un lado puede usar el exe mientras el otro corre `warp.py` en terminal — misma sesión, mismo cifrado.
+
 ### Limitaciones / Problemas conocidos
 - Usa broker.hivemq.com como broker público — no apto para datos sensibles en producción
 - Sincronización de una sola carpeta (sin recursión)
 - Sin reanudación en transferencias interrumpidas (WIP)
 
 ### Roadmap
+- [x] GUI para Windows con PORTAL drag-and-drop
 - [ ] Sincronización recursiva de carpetas
 - [ ] Reanudación de archivos
 
