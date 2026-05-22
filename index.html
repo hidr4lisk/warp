@@ -20,15 +20,13 @@
     <div class="top-bar" role="complementary" aria-label="System status">
         <div class="top-bar__inner">
             <div class="top-bar__left">
-                <nav class="tool-nav" aria-label="Hidr4lisk tools">
-                    <a href="https://hidralisk.online" class="tool-nav__btn tool-nav__btn--brand">Hidr4lisk_</a>
-                    <span class="top-bar__sep" aria-hidden="true">/</span>
-                    <a href="https://hidr4lisk.github.io/warp" class="tool-nav__btn active" aria-current="page">WARP</a>
-                    <span class="top-bar__sep" aria-hidden="true">/</span>
-                    <a href="https://hidr4lisk.github.io/shield" class="tool-nav__btn">SHIELD</a>
-                    <span class="top-bar__sep" aria-hidden="true">/</span>
-                    <a href="https://hidr4lisk.github.io/tech" class="tool-nav__btn">TECH</a>
-                </nav>
+                <select class="tool-select" aria-label="Hidr4lisk tools"
+                        onchange="window.location.href=this.value">
+                    <option value="https://hidralisk.online">Hidr4lisk_</option>
+                    <option value="https://hidr4lisk.github.io/warp" selected>WARP</option>
+                    <option value="https://hidr4lisk.github.io/shield">SHIELD</option>
+                    <option value="https://hidr4lisk.github.io/tech">TECH</option>
+                </select>
             </div>
             <div class="top-bar__right">
                 <nav class="lang-toggle" aria-label="Language selector">
