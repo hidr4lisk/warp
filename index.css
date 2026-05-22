@@ -975,7 +975,7 @@ footer {
     z-index: 199;
     height: 38px;
     background: rgba(10, 11, 12, 0.95);
-    border-bottom: 1px solid var(--accent);
+    border-bottom: 1px solid var(--border-default);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     overflow: hidden;
