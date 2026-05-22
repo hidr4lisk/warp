@@ -78,6 +78,24 @@ const revealObs = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('[data-animatable]').forEach(el => revealObs.observe(el));
 
+(function(){
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const el = document.querySelector('.hero__title');
+    if (!el) return;
+    const orig = el.textContent;
+    const chars = '!@#$%^&*<>[]{}01';
+    let frame = 0;
+    const total = 40;
+    const id = setInterval(() => {
+        el.textContent = [...orig].map((ch, i) => {
+            const lockAt = Math.floor((i / orig.length) * total * 0.75);
+            return frame > lockAt ? ch : chars[Math.floor(Math.random() * chars.length)];
+        }).join('');
+        if (++frame >= total) { clearInterval(id); el.textContent = orig; }
+    }, 50);
+    setTimeout(() => { const ov = document.getElementById('glitch-overlay'); if (ov) ov.remove(); }, 2100);
+})();
+
 // ── Copy command from setup terminal ────────────────────────────────
 function copyCmd(btn) {
     const cmd = btn.closest('.setup-cmd').dataset.cmd;
