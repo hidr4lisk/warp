@@ -219,6 +219,8 @@ body::before {
     pointer-events: none;
 }
 
+.tool-nav__btn--brand { text-transform: none; }
+
 .status-dot {
     width: 7px;
     height: 7px;
