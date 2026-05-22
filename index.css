@@ -184,6 +184,33 @@ body::before {
 .top-bar__online { color: var(--accent); }
 .top-bar__sep    { color: var(--border-strong); }
 
+.top-bar__brand-prefix { color: var(--text-secondary); font-weight: 700; letter-spacing: 0.02em; text-transform: none; }
+.top-bar__brand-tool   { color: var(--accent); font-weight: 700; letter-spacing: 0.02em; }
+
+.tool-nav {
+    display: flex;
+    align-items: center;
+    gap: var(--s-1);
+}
+
+.tool-nav__btn {
+    padding: 2px var(--s-2);
+    font-size: var(--t-xs);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--text-tertiary);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--r-1);
+    transition: color var(--dur-fast), border-color var(--dur-fast);
+}
+
+.tool-nav__btn:hover {
+    color: var(--text-secondary);
+    border-color: var(--border-default);
+}
+
 .status-dot {
     width: 7px;
     height: 7px;

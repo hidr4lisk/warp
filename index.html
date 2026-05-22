@@ -21,15 +21,18 @@
         <div class="top-bar__inner">
             <div class="top-bar__left">
                 <span class="status-dot" aria-label="Online"></span>
-                <span class="top-bar__brand">Hidr4lisk_Warp</span>
-                <span class="top-bar__sep top-bar__hide-xs" aria-hidden="true">//</span>
-                <span class="top-bar__online top-bar__hide-xs">ONLINE</span>
+                <span class="top-bar__brand"><span class="top-bar__brand-prefix">Hidr4lisk_</span><span class="top-bar__brand-tool">WARP</span></span>
             </div>
             <div class="top-bar__right">
+                <nav class="tool-nav" aria-label="Hidr4lisk tools">
+                    <a href="https://hidr4lisk.github.io/shield" class="tool-nav__btn">SHIELD</a>
+                    <a href="https://hidr4lisk.github.io/tech" class="tool-nav__btn">TECH</a>
+                </nav>
+                <span class="top-bar__sep" aria-hidden="true">|</span>
                 <span class="top-bar__version top-bar__hide-sm">v2.0</span>
                 <span class="top-bar__sep top-bar__hide-sm" aria-hidden="true">|</span>
                 <span class="top-bar__sessions top-bar__hide-xs" aria-hidden="true">VISITS: <span class="vt323" id="visit-count">—</span></span>
-                <span class="top-bar__sep" aria-hidden="true">|</span>
+                <span class="top-bar__sep top-bar__hide-xs" aria-hidden="true">|</span>
                 <nav class="lang-toggle" aria-label="Language selector">
                     <button class="lang-btn active" id="lang-en" onclick="setLang('en')" aria-pressed="true">EN</button>
                     <span class="lang-sep" aria-hidden="true">/</span>
