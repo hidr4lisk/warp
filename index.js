@@ -1,17 +1,3 @@
-// ── Visit counter via CountAPI ───────────────────────────────────────
-(function () {
-    const el = document.getElementById('visit-count');
-    if (!el) return;
-    fetch('https://api.counterapi.dev/v1/hidr4lisk-warp/visits/up')
-        .then(r => r.json())
-        .then(d => {
-            if (typeof d.count === 'number') {
-                el.textContent = String(d.count).padStart(4, '0');
-            }
-        })
-        .catch(() => { el.textContent = '????'; });
-})();
-
 // ── Extra i18n keys not present in generator.js translations ────────
 const extraTranslations = {
     en: {
