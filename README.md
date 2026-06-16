@@ -12,13 +12,20 @@
 
 ## English
 
-Hidr4lisk_WARP is a zero-config, zero-knowledge ephemeral P2P tool. It uses a public MQTT broker as a blind relay while handling AES-256-GCM encryption and SHA-256 integrity checks entirely on the client side. No accounts, no servers, no port forwarding.
+Hidr4lisk_WARP is a zero-config, zero-knowledge ephemeral P2P tool: AES-256-GCM encryption and SHA-256 integrity run entirely client-side, with a public MQTT broker as a blind relay. No accounts, no servers, no port forwarding. The broker sees only ciphertext.
 
-### 🌐 Web app — no install (new in v3)
+### 🌐 v3 — runs in your browser (no install) — **the flagship**
 
-**[Open WARP in your browser →](https://hidr4lisk.github.io/warp/app.html)** — the same engine, 100% in the browser. Create a session, share the **link or QR**, and two people (phone or desktop) send files and chat instantly. AES-256-GCM via WebCrypto, MQTT over WebSocket (WSS), nothing stored — close the tab and it's gone. The key travels inside the link's `#fragment`, never to any server. Ideal for phone-to-phone. The Python `warp.py` below remains for folder-sync between desktops.
+**[→ Open WARP](https://hidr4lisk.github.io/warp/)** — the whole tool, 100% in the browser, on one page. Create a session, share the **link or QR** (the QR carries the `Hidr4lisk_` mark in its center), and two people — phone or desktop — send files and chat instantly through a glowing PORTAL. AES-256-GCM via WebCrypto, MQTT over WebSocket (WSS), nothing stored — close the tab and it's gone. The key rides inside the link's `#fragment`, never to any server. Ideal phone-to-phone.
 
-### How it works
+The original **desktop clients live on, further down the same page** — for the terminal or a folder that auto-syncs in the background:
+
+- **v1 · Python** (Linux / macOS / terminal) — `warp.py`, a folder that auto-syncs via Watchdog.
+- **v2 · Windows** — native GUI with the PORTAL drag-and-drop.
+
+---
+
+### Desktop client (v1 · Python) — how it works
 
 1. **Generate a session** on the [web generator](https://hidr4lisk.github.io/warp/) — it creates a unique `SESSION_ID` and a 256-bit `SECRET_KEY` and bakes them into `warp.py`. Optionally specify a custom MQTT broker before generating.
 2. **Copy `warp.py`** into the folder you want to sync on each machine.
@@ -75,13 +82,20 @@ pip install paho-mqtt cryptography tkinterdnd2
 
 ## Español
 
-Hidr4lisk_WARP es una herramienta P2P efímera, sin configuración y sin conocimiento. Usa un broker MQTT público como relay ciego mientras maneja el cifrado AES-256-GCM y la verificación de integridad SHA-256 completamente del lado del cliente. Sin cuentas, sin servidores, sin abrir puertos.
+Hidr4lisk_WARP es una herramienta P2P efímera, sin configuración y sin conocimiento: el cifrado AES-256-GCM y la integridad SHA-256 corren enteros del lado del cliente, con un broker MQTT público como relay ciego. Sin cuentas, sin servidores, sin abrir puertos. El broker solo ve ciphertext.
 
-### 🌐 App web — sin instalar (nuevo en v3)
+### 🌐 v3 — corre en tu navegador (sin instalar) — **el flagship**
 
-**[Abrí WARP en el navegador →](https://hidr4lisk.github.io/warp/app.html)** — el mismo motor, 100% en el navegador. Generás una sesión, compartís el **link o el QR**, y dos personas (celu o desktop) se mandan archivos y chatean al instante. AES-256-GCM vía WebCrypto, MQTT sobre WebSocket (WSS), nada se guarda — cerrás la pestaña y desaparece. La clave viaja dentro del `#fragmento` del link, nunca a un servidor. Ideal celu-a-celu. El `warp.py` de Python de abajo sigue para sincronizar carpetas entre escritorios.
+**[→ Abrí WARP](https://hidr4lisk.github.io/warp/)** — toda la herramienta, 100% en el navegador, en una sola página. Generás una sesión, compartís el **link o el QR** (el QR lleva la marca `Hidr4lisk_` en el centro), y dos personas — celu o desktop — se mandan archivos y chatean al instante a través de un PORTAL que brilla. AES-256-GCM vía WebCrypto, MQTT sobre WebSocket (WSS), nada se guarda — cerrás la pestaña y desaparece. La clave viaja dentro del `#fragmento` del link, nunca a un servidor. Ideal celu-a-celu.
 
-### Cómo funciona
+Los **clientes de escritorio originales siguen vivos, más abajo en la misma página** — para la terminal o una carpeta que se sincroniza sola en segundo plano:
+
+- **v1 · Python** (Linux / macOS / terminal) — `warp.py`, una carpeta que se sincroniza sola vía Watchdog.
+- **v2 · Windows** — GUI nativa con el PORTAL drag-and-drop.
+
+---
+
+### Cliente de escritorio (v1 · Python) — cómo funciona
 
 1. **Generá una sesión** en el [generador web](https://hidr4lisk.github.io/warp/) — crea un `SESSION_ID` único y una `SECRET_KEY` de 256 bits que se inyectan en `warp.py`. Opcionalmente podés especificar un broker MQTT propio antes de generar.
 2. **Copiá `warp.py`** en la carpeta que querés sincronizar en cada máquina.

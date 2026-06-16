@@ -84,7 +84,7 @@ document.querySelectorAll('[data-animatable]').forEach(el => revealObs.observe(e
 
 (function(){
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const el = document.querySelector('.hero__title');
+    const el = document.querySelector('.hero3__title-text');
     if (!el) return;
     const orig = el.textContent;
     const chars = '!@#$%^&*<>[]{}01';

@@ -24,7 +24,7 @@ const PEER_TIMEOUT_S      = 90;
 // ─── Estado (todo en memoria, nada persiste) ────────────────────────────────
 let mqttClient = null;
 let cryptoKey  = null;     // CryptoKey AES-GCM
-let sessionId  = '';
+let warpSessionId  = '';
 let nodeName   = '';
 let shareLink  = '';
 let connected  = false;
@@ -70,6 +70,15 @@ const APP_I18N = {
         err_nokey: '[!] Invalid or missing session key. Ask for a fresh link.',
         err_broker: '[!] Could not reach the relay. Retrying…',
         nav_home: 'HOME',
+        hero_kicker: 'Live in your browser · no install · ephemeral',
+        web_how_title: '// HOW IT WORKS',
+        web_s1_t: 'Generate', web_s1_d: 'A 256-bit key is born in your browser. No account, no server.',
+        web_s2_t: 'Share', web_s2_d: 'Send the link or scan the QR. The key rides inside the link — never to a server.',
+        web_s3_t: 'Connect', web_s3_d: 'Both browsers meet over an encrypted channel. Files & chat flow. Close it — gone.',
+        legacy_eyebrow: '// ALSO ON DESKTOP',
+        legacy_lead: 'Prefer the terminal, or a folder that auto-syncs in the background? The original clients live on.',
+        legacy_v1: 'v1 · Python — Linux / macOS / terminal',
+        legacy_v2: 'v2 · Windows — native GUI',
     },
     es: {
         app_tagline: 'Sincronización efímera navegador-a-navegador',
@@ -105,29 +114,26 @@ const APP_I18N = {
         err_nokey: '[!] Clave de sesión inválida o faltante. Pedí un link nuevo.',
         err_broker: '[!] No se pudo alcanzar el relay. Reintentando…',
         nav_home: 'INICIO',
+        hero_kicker: 'En vivo en tu navegador · sin instalar · efímero',
+        web_how_title: '// CÓMO FUNCIONA',
+        web_s1_t: 'Generá', web_s1_d: 'Una clave de 256 bits nace en tu navegador. Sin cuenta, sin servidor.',
+        web_s2_t: 'Compartí', web_s2_d: 'Mandá el link o que escaneen el QR. La clave viaja dentro del link — nunca a un servidor.',
+        web_s3_t: 'Conectá', web_s3_d: 'Los dos navegadores se encuentran por un canal cifrado. Archivos y chat. Cerrás — desaparece.',
+        legacy_eyebrow: '// TAMBIÉN EN ESCRITORIO',
+        legacy_lead: '¿Preferís la terminal, o una carpeta que se sincroniza sola en segundo plano? Los clientes originales siguen vivos.',
+        legacy_v1: 'v1 · Python — Linux / macOS / terminal',
+        legacy_v2: 'v2 · Windows — GUI nativa',
     },
 };
-let lang = (navigator.language || 'en').startsWith('es') ? 'es' : 'en';
-const T = () => APP_I18N[lang];
-
-function applyLang() {
-    const t = T();
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-        const v = t[el.dataset.i18n];
-        if (typeof v === 'string') el.innerHTML = v;
-    });
-    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-        const v = t[el.dataset.i18nPlaceholder];
-        if (typeof v === 'string') el.placeholder = v;
-    });
-    const en = document.getElementById('lang-en'), es = document.getElementById('lang-es');
-    if (en) en.classList.toggle('active', lang === 'en');
-    if (es) es.classList.toggle('active', lang === 'es');
-    document.documentElement.lang = lang;
-    // refrescar textos dinámicos que dependen del idioma
-    refreshPeerStatus();
+// Enchufar al i18n GLOBAL del sitio: generator.js define translations/setLang/currentLang.
+// app.js solo APORTA sus claves (mismo patrón que index.js) → un único setLang (el de la
+// navbar) localiza todo. Las claves función-valuadas (peer_online…) se llaman desde JS.
+if (typeof translations !== 'undefined') {
+    Object.assign(translations.en, APP_I18N.en);
+    Object.assign(translations.es, APP_I18N.es);
 }
-function setLang(l) { lang = l; applyLang(); }
+const curLang = () => (typeof currentLang !== 'undefined' ? currentLang : 'en');
+const T = () => (typeof translations !== 'undefined' ? translations[curLang()] : APP_I18N[curLang()]);
 
 // ─── base64 (estándar para el wire, b64url para el link) ────────────────────
 function bytesToB64(bytes) {
@@ -182,7 +188,7 @@ function buildFrame(type, body) {
 async function sendFrame(type, body, qos = 1) {
     if (!mqttClient || !connected) return;
     const pkt = await encryptPayload(buildFrame(type, body));
-    mqttClient.publish(sessionId, JSON.stringify(pkt), { qos });
+    mqttClient.publish(warpSessionId, JSON.stringify(pkt), { qos });
 }
 
 // ─── Filename safety (== _safe_filename del Python) ─────────────────────────
@@ -204,7 +210,7 @@ function connect(broker) {
     });
     mqttClient.on('connect', () => {
         connected = true;
-        mqttClient.subscribe(sessionId, { qos: 1 });
+        mqttClient.subscribe(warpSessionId, { qos: 1 });
         onConnected();
     });
     mqttClient.on('reconnect', () => setStatus(T().err_broker));
@@ -333,7 +339,7 @@ async function sendFile(file) {
         if (i === totalChunks - 1) body.hash = hash;   // hash solo en el último chunk
         await sendFrame('FILE', body);
         updateTransfer(row, (i + 1) / totalChunks);
-        await sleep(8);   // no saturar el broker
+        await delay(8);   // no saturar el broker
     }
     setTransferDone(row, T().sent);
     setTimeout(() => sendingFiles.delete(file.name), 2000);
@@ -437,17 +443,17 @@ function randomNick() { return 'Device-' + crypto.randomUUID().slice(0, 4).toUpp
 
 async function createSession() {
     nodeName = (document.getElementById('nick')?.value || '').trim() || randomNick();
-    sessionId = 'WARP-' + crypto.randomUUID();
+    warpSessionId = 'WARP-' + crypto.randomUUID();
     const keyBytes = generateSecretKeyBytes();
     cryptoKey = await importKeyRaw(keyBytes);
-    shareLink = `${location.origin}${location.pathname}#s=${encodeURIComponent(sessionId)}&k=${b64url(bytesToB64(keyBytes))}&l=${lang}`;
+    shareLink = `${location.origin}${location.pathname}#s=${encodeURIComponent(warpSessionId)}&k=${b64url(bytesToB64(keyBytes))}&l=${curLang()}`;
     enterRoom(true);
     connect(brokerFromQuery());
 }
 
 async function joinSession(s, k) {
     nodeName = randomNick();
-    sessionId = s;
+    warpSessionId = s;
     try { cryptoKey = await importKeyRaw(b64urlToBytes(k)); }
     catch { showFatal(T().err_nokey); return; }
     shareLink = location.href;
@@ -478,7 +484,8 @@ function renderQR(text) {
     if (!box || typeof QRCode === 'undefined') return;
     try {
         box.innerHTML = '';
-        qr = new QRCode(box, { text, width: 196, height: 196, colorDark: '#0d0d0d', colorLight: '#cfe3d8', correctLevel: QRCode.CorrectLevel.M });
+        // correctLevel H (~30% recuperación) tolera el logo Hidr4lisk_ centrado sin perder escaneo.
+        qr = new QRCode(box, { text, width: 200, height: 200, colorDark: '#0d0d0d', colorLight: '#cfe3d8', correctLevel: QRCode.CorrectLevel.H });
     } catch { /* el QR es opcional; el link sigue disponible */ }
 }
 function setStatus(text) {
@@ -492,7 +499,7 @@ function showFatal(text) {
 }
 
 // ─── utils ───────────────────────────────────────────────────────────────────
-const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+const delay = (ms) => new Promise(r => setTimeout(r, ms));
 function fmtSize(n) {
     if (n < 1024) return n + ' B';
     if (n < 1024 * 1024) return (n / 1024).toFixed(1) + ' KB';
@@ -514,11 +521,19 @@ function wireUI() {
     document.getElementById('chat-send')?.addEventListener('click', sendChat);
     document.getElementById('chat-input')?.addEventListener('keydown', e => { if (e.key === 'Enter') sendChat(); });
 
+    // Invitar: al Compartir o Copiar, la sección se minimiza (deja de molestar); reabrible.
+    const collapseInvite = () => document.getElementById('invite')?.classList.add('collapsed');
+    document.getElementById('invite-reopen')?.addEventListener('click',
+        () => document.getElementById('invite')?.classList.remove('collapsed'));
+
     document.getElementById('share-btn')?.addEventListener('click', async () => {
-        if (navigator.share) { try { await navigator.share({ title: 'WARP', text: 'Join my WARP session', url: shareLink }); return; } catch {} }
+        if (navigator.share) {
+            try { await navigator.share({ title: 'Hidr4lisk_WARP', text: 'Join my WARP session →', url: shareLink }); collapseInvite(); return; } catch {}
+        }
         copyLink();
+        collapseInvite();
     });
-    document.getElementById('copy-btn')?.addEventListener('click', copyLink);
+    document.getElementById('copy-btn')?.addEventListener('click', () => { copyLink(); collapseInvite(); });
 
     const portal = document.getElementById('portal');
     const fileInput = document.getElementById('file-input');
@@ -545,8 +560,13 @@ function boot() {
     wireUI();
     const { s, k } = parseHash();
     const hl = new URLSearchParams((location.hash || '').replace(/^#/, '')).get('l');
-    if (hl === 'es' || hl === 'en') lang = hl;
-    applyLang();
+    if ((hl === 'es' || hl === 'en') && typeof currentLang !== 'undefined') currentLang = hl;
+    if (typeof setLang === 'function') setLang(curLang());   // localizar las claves de app
+    // envolver el setLang global para refrescar también los strings dinámicos al cambiar idioma
+    if (typeof window.setLang === 'function') {
+        const _sl = window.setLang;
+        window.setLang = function (l) { _sl(l); try { refreshPeerStatus(); } catch {} };
+    }
     if (s && k) joinSession(s, k);
     else show('screen-start');
 }
