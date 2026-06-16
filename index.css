@@ -1330,3 +1330,26 @@ footer {
     .win-announce__inner { gap: var(--s-3); }
 }
 
+
+/* ── v3 flagship CTA (cliente web/móvil) ─────────────────────────────────── */
+.hero__cta {
+    display: inline-flex; align-items: center; gap: .7rem; flex-wrap: wrap;
+    margin: 1.4rem 0 .6rem;
+    padding: .85rem 1.4rem; border-radius: 999px;
+    background: var(--accent); color: var(--bg-base);
+    font-family: var(--font-mono); font-weight: 800; letter-spacing: .03em;
+    font-size: var(--t-base, 1rem); text-decoration: none;
+    box-shadow: var(--glow-soft);
+    transition: transform var(--dur-fast, 150ms) var(--ease-out, ease), box-shadow var(--dur-fast, 150ms);
+}
+.hero__cta:hover { transform: translateY(-2px); box-shadow: var(--glow-accent); }
+.hero__cta-badge {
+    background: var(--bg-base); color: var(--accent);
+    font-size: 1rem; letter-spacing: .08em;
+    padding: .05em .55em; border-radius: 5px;
+}
+.hero__cta-arrow { font-weight: 700; }
+.hero__cta-note {
+    color: var(--text-secondary); font-size: var(--t-sm, .875rem);
+    line-height: 1.6; margin: 0 0 .5rem; max-width: 46ch;
+}

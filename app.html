@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description"
+        content="Hidr4lisk_WARP v3 — Ephemeral browser-to-browser encrypted file transfer and chat. Generate a session, share the link or QR, connect instantly. Nothing stored.">
+    <title>Hidr4lisk_WARP // Live</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Major+Mono+Display&family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="app.css">
+</head>
+
+<body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <!-- ── Top bar (navbar reusada del sitio) ───────────────────────── -->
+    <div class="top-bar" role="complementary" aria-label="System status">
+        <div class="top-bar__inner">
+            <div class="top-bar__left">
+                <select class="tool-select" aria-label="Hidr4lisk tools"
+                        onchange="window.location.href=this.value">
+                    <option value="https://hidralisk.online">Hidr4lisk_</option>
+                    <option value="https://hidr4lisk.github.io/warp" selected>WARP</option>
+                    <option value="https://hidr4lisk.github.io/shield">SHIELD</option>
+                    <option value="https://hidr4lisk.github.io/tech">TECH</option>
+                    <option value="https://hidr4lisk.github.io/pentool">PENTOOL</option>
+                    <option value="https://github.com/hidr4lisk/swarm">SWARM</option>
+                </select>
+            </div>
+            <div class="top-bar__right">
+                <nav class="lang-toggle" aria-label="Language selector">
+                    <button class="lang-btn active" id="lang-en" onclick="setLang('en')" aria-pressed="true">EN</button>
+                    <span class="lang-sep" aria-hidden="true">/</span>
+                    <button class="lang-btn" id="lang-es" onclick="setLang('es')" aria-pressed="false">ES</button>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <main class="app-wrap" id="main-content">
+
+        <!-- ── Header ───────────────────────────────────────────────── -->
+        <header class="app-head">
+            <a class="app-logo" href="index.html">Hidr4lisk_WARP <span class="vt323 app-ver">v3</span></a>
+            <p class="app-tagline" data-i18n="app_tagline">Ephemeral browser-to-browser sync</p>
+        </header>
+
+        <!-- ── Screen: start ────────────────────────────────────────── -->
+        <section class="screen" id="screen-start">
+            <div class="card start-card">
+                <p class="section-eyebrow" data-i18n="start_title">Start a secure session</p>
+                <p class="muted" data-i18n="start_desc">Generate a session and share the link or QR.</p>
+
+                <label class="field-label" for="nick" data-i18n="nick_label">Your name</label>
+                <input id="nick" class="text-input" maxlength="24" autocomplete="off" spellcheck="false"
+                       placeholder="Device-…">
+
+                <button id="create-btn" class="btn-primary" data-i18n="btn_create">CREATE SESSION</button>
+                <p id="start-error" class="err hidden"></p>
+
+                <p class="about-tags vt323">WARPv2 · AES-256-GCM · MQTT/WSS · zero-knowledge</p>
+            </div>
+        </section>
+
+        <!-- ── Screen: room ─────────────────────────────────────────── -->
+        <section class="screen hidden" id="screen-room">
+            <div class="peer-status" id="peer-status"></div>
+
+            <!-- Invitar (visible para quien crea, hasta compartir) -->
+            <div class="card invite" id="invite">
+                <p class="section-eyebrow" data-i18n="invite_title">// INVITE A PEER</p>
+                <p class="muted" data-i18n="invite_desc">Send this link or let them scan the QR.</p>
+                <div class="qr" id="qr" aria-label="Session QR code"></div>
+                <input id="share-link" class="share-link" readonly aria-label="Session link">
+                <div class="btn-row">
+                    <button id="share-btn" class="btn-primary" data-i18n="btn_share">↗ SHARE LINK</button>
+                    <button id="copy-btn" class="btn-ghost" data-i18n="btn_copy">⧉ COPY</button>
+                </div>
+            </div>
+
+            <div class="room-grid">
+                <!-- Chat -->
+                <div class="card chat-card">
+                    <p class="section-eyebrow" data-i18n="chat_title">// CHAT</p>
+                    <div class="chat-log" id="chat-log" aria-live="polite"></div>
+                    <div class="chat-input-row">
+                        <input id="chat-input" class="text-input" maxlength="2000" autocomplete="off"
+                               data-i18n-placeholder="chat_placeholder" placeholder="Type a message…">
+                        <button id="chat-send" class="btn-send" aria-label="Send">↵</button>
+                    </div>
+                </div>
+
+                <!-- Portal de archivos -->
+                <div class="card portal-card">
+                    <p class="section-eyebrow" data-i18n="portal_title">// PORTAL</p>
+                    <div class="portal" id="portal" role="button" tabindex="0">
+                        <span class="portal-glyph" aria-hidden="true">⇪</span>
+                        <span class="portal-hint" data-i18n="portal_hint">Drop files here or tap to choose</span>
+                        <input type="file" id="file-input" multiple hidden>
+                    </div>
+                    <p class="section-eyebrow xfer-eyebrow" data-i18n="transfers_title">// TRANSFERS</p>
+                    <div class="transfers" id="transfers"></div>
+                </div>
+            </div>
+
+            <a class="leave" href="app.html" data-i18n="leave">↺ NEW SESSION</a>
+        </section>
+
+    </main>
+
+    <script src="vendor/mqtt.min.js"></script>
+    <script src="vendor/qrcode.min.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
