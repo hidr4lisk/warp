@@ -7,7 +7,7 @@
 .hero3 {
     max-width: 880px;
     margin: 0 auto;
-    padding: clamp(1.5rem, 5vw, 3.5rem) var(--page-pad, 1rem) 1rem;
+    padding: clamp(.7rem, 2.5vw, 1.4rem) var(--page-pad, 1rem) 1rem;  /* navbar más cerca del eyebrow */
     text-align: center;
 }
 .hero3__eyebrow {
@@ -41,7 +41,11 @@
     box-shadow: 0 0 0 1px rgba(0,0,0,.4), 0 30px 80px -40px rgba(0,0,0,.9), var(--glow-soft);
 }
 /* .terminal-header viene de index.css (mac-dots + título) */
-.client__body { padding: clamp(1rem, 3vw, 1.6rem); }
+.client__body { padding: clamp(.9rem, 2.4vw, 1.25rem) clamp(1rem, 3vw, 1.6rem) clamp(1rem, 3vw, 1.6rem); }
+/* el header del terminal queda más pegado al primer texto */
+.client .screen { padding: 0; }   /* mata el padding-top de 32px que hereda <section> de index.css */
+.client__body > .screen > :first-child { margin-top: 0; }
+.client .section-eyebrow { margin-bottom: .85rem; }
 
 /* ── Screens ────────────────────────────────────────────────────────────── */
 .screen { display: flex; flex-direction: column; gap: 1.1rem; }
