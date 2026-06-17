@@ -26,7 +26,7 @@
   #flash{position:absolute;inset:0;z-index:45;background:var(--g2);opacity:0;pointer-events:none}
 
   .scene{position:absolute;inset:0;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    text-align:center;padding:0 120px;opacity:0;transform:translateY(26px);
+    text-align:center;padding:0 64px;opacity:0;transform:translateY(26px);
     transition:opacity .45s ease,transform .45s cubic-bezier(.16,1,.3,1)}
   .scene.on{opacity:1;transform:translateY(0)}
   .scene.off{opacity:0;transform:translateY(-22px);transition:opacity .3s ease,transform .3s ease}
@@ -38,7 +38,7 @@
   .big{font-size:72px;font-weight:800;line-height:1.2}
 
   /* wordmark */
-  .wm{font-family:var(--disp);font-size:104px;color:#fff;letter-spacing:.02em;position:relative;display:inline-block}
+  .wm{font-family:var(--disp);font-size:60px;color:#fff;letter-spacing:.01em;position:relative;display:inline-block;white-space:nowrap;max-width:100%}
   .wm .v{font-family:var(--vt);font-size:.3em;color:var(--g2);border:2px solid var(--g2);border-radius:8px;padding:0 .3em;margin-left:.2em;vertical-align:middle}
   .glitch::before,.glitch::after{content:attr(data-t);position:absolute;left:0;top:0;width:100%;clip-path:inset(0 0 0 0);opacity:0}
   .glitch.go::before{color:#37d6d0;animation:gA .5s steps(2) 1}
@@ -73,11 +73,12 @@
   .portal.roar{transform:scale(1.12);box-shadow:0 0 0 4px var(--g2),0 0 160px rgba(182,255,58,.9)}
   .portal.roar .r1{animation-duration:1.6s}
   @keyframes spin{to{transform:rotate(360deg)}}
-  .pfile{position:absolute;z-index:12;left:50%;top:14%;transform:translateX(-50%);font-family:var(--vt);font-size:34px;color:var(--g2);
-    text-shadow:0 0 14px var(--g1);opacity:0}
+  .pfile{position:absolute;z-index:12;left:50%;top:12%;transform:translateX(-50%);font-family:var(--vt);font-size:34px;color:#fff;
+    background:rgba(6,14,8,.92);padding:.16em .6em;border-radius:9px;border:2px solid var(--g2);box-shadow:0 0 18px rgba(57,211,83,.6);white-space:nowrap;opacity:0}
   .pfile.go{animation:suck 1.7s ease-in forwards}
   @keyframes suck{0%{opacity:1;top:8%;transform:translateX(-50%) scale(1)}70%{opacity:1}100%{opacity:0;top:50%;transform:translateX(-50%) scale(.1)}}
-  .recv{position:absolute;z-index:12;left:50%;bottom:12%;transform:translateX(-50%);font-family:var(--vt);font-size:38px;color:var(--g2);opacity:0}
+  .recv{position:absolute;z-index:12;left:50%;bottom:11%;transform:translateX(-50%);font-family:var(--vt);font-size:38px;color:var(--g2);
+    background:rgba(6,14,8,.92);padding:.14em .6em;border-radius:9px;border:2px solid var(--g2);white-space:nowrap;opacity:0}
   .recv.go{animation:pop .5s ease 1.7s forwards}
   @keyframes pop{from{opacity:0;transform:translateX(-50%) scale(.6)}to{opacity:1;transform:translateX(-50%) scale(1)}}
 
