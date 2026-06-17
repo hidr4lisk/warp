@@ -16,8 +16,10 @@
   body{min-height:100dvh;display:flex;align-items:center;justify-content:center}
   /* el stage es 1080×1920 fijo y se escala a la pantalla (a 1080×1920 escala = 1, no afecta la grabación) */
   #stage{position:relative;width:1080px;height:1920px;flex:0 0 auto;transform-origin:center center;
-    background:#050705;overflow:hidden;font-family:var(--mono);color:#ececec}
-  #rain{position:absolute;inset:0;z-index:0}
+    background:#050705;overflow:hidden;font-family:var(--mono);color:#ececec;
+    background-image:linear-gradient(rgba(57,211,83,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(57,211,83,.05) 1px,transparent 1px);
+    background-size:46px 46px}
+  #rain{display:none}
   .scan{position:absolute;inset:0;z-index:40;pointer-events:none;
     background:repeating-linear-gradient(to bottom,rgba(0,0,0,.16) 0,rgba(0,0,0,.16) 2px,transparent 2px,transparent 5px);opacity:.5}
   .vig{position:absolute;inset:0;z-index:41;pointer-events:none;box-shadow:inset 0 0 420px 80px rgba(0,0,0,.85)}
@@ -38,7 +40,7 @@
   /* wordmark */
   .wm{font-family:var(--disp);font-size:104px;color:#fff;letter-spacing:.02em;position:relative;display:inline-block}
   .wm .v{font-family:var(--vt);font-size:.3em;color:var(--g2);border:2px solid var(--g2);border-radius:8px;padding:0 .3em;margin-left:.2em;vertical-align:middle}
-  .glitch::before,.glitch::after{content:attr(data-t);position:absolute;left:0;top:0;width:100%;clip-path:inset(0 0 0 0)}
+  .glitch::before,.glitch::after{content:attr(data-t);position:absolute;left:0;top:0;width:100%;clip-path:inset(0 0 0 0);opacity:0}
   .glitch.go::before{color:#37d6d0;animation:gA .5s steps(2) 1}
   .glitch.go::after{color:var(--g2);animation:gB .5s steps(2) 1}
   @keyframes gA{0%{transform:translate(-8px,0);opacity:.8}50%{transform:translate(6px,2px)}100%{opacity:0;transform:none}}
@@ -215,7 +217,7 @@ function rain(){
   }
   raf=requestAnimationFrame(rain);
 }
-rain();
+// lluvia de fondo desactivada (pedido) — queda la grilla matrix sutil + scanlines
 
 // ── Timeline ──
 const beats=[
