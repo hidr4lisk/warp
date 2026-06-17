@@ -45,6 +45,7 @@ const APP_I18N = {
         invite_desc: 'Send this link (or let them scan the QR). The key travels inside the link — never to any server.',
         btn_share: '↗ SHARE LINK',
         btn_copy: '⧉ COPY',
+        btn_qr: '⤓ SAVE QR',
         copied: 'Copied!',
         waiting: 'Waiting for peer to join…',
         peer_online: (n) => `● ${n} online`,
@@ -88,6 +89,7 @@ const APP_I18N = {
         invite_desc: 'Mandá este link (o que escaneen el QR). La clave viaja dentro del link — nunca a un servidor.',
         btn_share: '↗ COMPARTIR LINK',
         btn_copy: '⧉ COPIAR',
+        btn_qr: '⤓ GUARDAR QR',
         copied: '¡Copiado!',
         waiting: 'Esperando que se una alguien…',
         peer_online: (n) => `● ${n} en línea`,
@@ -486,6 +488,46 @@ function renderQR(text) {
         qr = new QRCode(box, { text, width: 200, height: 200, colorDark: '#0d0d0d', colorLight: '#cfe3d8', correctLevel: QRCode.CorrectLevel.H });
     } catch { /* el QR es opcional; el link sigue disponible */ }
 }
+// Exporta el QR + la marca Hidr4lisk_ central (que en pantalla es un overlay CSS, no
+// parte del canvas) componiéndolos en un PNG. Replica el estilo de .qr-logo leyéndolo en vivo.
+function downloadQR() {
+    const src = document.querySelector('#qr canvas') || document.querySelector('#qr img');
+    if (!src) return;
+    const S = 560, pad = 36, qrS = S - pad * 2;
+    const c = document.createElement('canvas');
+    c.width = S; c.height = S;
+    const ctx = c.getContext('2d');
+    ctx.fillStyle = '#cfe3d8'; ctx.fillRect(0, 0, S, S);   // mismo fondo claro que .qr
+    ctx.imageSmoothingEnabled = false;                      // QR nítido (nearest-neighbor)
+    ctx.drawImage(src, pad, pad, qrS, qrS);
+
+    // Marca central — replica .qr-logo leyendo su estilo computado y escalándolo al export
+    const logoEl = document.querySelector('.qr-logo');
+    const cs = logoEl && getComputedStyle(logoEl);
+    const dispW = src.getBoundingClientRect().width || 180;
+    const k = qrS / dispW;                                  // factor pantalla → imagen
+    const fs = (cs ? parseFloat(cs.fontSize) : 10) * k;
+    const ls = (cs ? (parseFloat(cs.letterSpacing) || 0) : 0) * k;
+    ctx.font = `${cs ? cs.fontWeight : '800'} ${fs}px ${cs ? cs.fontFamily : 'monospace'}`;
+    ctx.textBaseline = 'middle'; ctx.textAlign = 'left';
+    const txt = 'Hidr4lisk_';
+    let tw = 0; for (const ch of txt) tw += ctx.measureText(ch).width + ls; tw -= ls;
+    const padX = fs * 0.5, padY = fs * 0.28, bw = Math.max(2 * k, 2);
+    const boxW = tw + padX * 2, boxH = fs + padY * 2;
+    const bx = (S - boxW) / 2, by = (S - boxH) / 2, r = 5 * k;
+    ctx.beginPath();
+    if (ctx.roundRect) ctx.roundRect(bx, by, boxW, boxH, r);
+    else ctx.rect(bx, by, boxW, boxH);
+    ctx.fillStyle = cs ? cs.backgroundColor : '#0d0d0d'; ctx.fill();
+    ctx.lineWidth = bw; ctx.strokeStyle = '#cfe3d8'; ctx.stroke();
+    ctx.fillStyle = cs ? cs.color : '#39d353';
+    let x = bx + padX; const cy = by + boxH / 2;
+    for (const ch of txt) { ctx.fillText(ch, x, cy); x += ctx.measureText(ch).width + ls; }
+
+    const a = document.createElement('a');
+    a.href = c.toDataURL('image/png'); a.download = 'warp-qr.png';
+    document.body.appendChild(a); a.click(); a.remove();
+}
 function setStatus(text) {
     const el = document.getElementById('peer-status');
     if (el && !peerCount()) el.textContent = text;
@@ -520,18 +562,24 @@ function wireUI() {
     document.getElementById('chat-input')?.addEventListener('keydown', e => { if (e.key === 'Enter') sendChat(); });
 
     // Invitar: al Compartir o Copiar, la sección se minimiza (deja de molestar); reabrible.
+    // El header también colapsa con un clic (útil al compartir pantalla en vivo: el QR
+    // sigue visible si no copiás/compartís).
     const collapseInvite = () => document.getElementById('invite')?.classList.add('collapsed');
     document.getElementById('invite-reopen')?.addEventListener('click',
         () => document.getElementById('invite')?.classList.remove('collapsed'));
+    document.getElementById('invite-collapse')?.addEventListener('click', collapseInvite);
 
-    document.getElementById('share-btn')?.addEventListener('click', async () => {
-        if (navigator.share) {
-            try { await navigator.share({ title: 'Hidr4lisk_WARP', text: 'Join my WARP session →', url: shareLink }); collapseInvite(); return; } catch {}
-        }
+    // COMPARTIR usa el menú nativo (navigator.share); en escritorio no existe → ocultamos el
+    // botón (caería en copyLink y sería un duplicado de COPIAR). COPIAR pasa a ocupar la fila.
+    const shareBtn = document.getElementById('share-btn');
+    if (shareBtn && !navigator.share) shareBtn.classList.add('hidden');
+    shareBtn?.addEventListener('click', async () => {
+        try { await navigator.share({ title: 'Hidr4lisk_WARP', text: 'Join my WARP session →', url: shareLink }); collapseInvite(); return; } catch {}
         copyLink();
         collapseInvite();
     });
     document.getElementById('copy-btn')?.addEventListener('click', () => { copyLink(); collapseInvite(); });
+    document.getElementById('qr-save-btn')?.addEventListener('click', downloadQR);
 
     const portal = document.getElementById('portal');
     const fileInput = document.getElementById('file-input');

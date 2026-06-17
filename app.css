@@ -103,6 +103,26 @@
 .invite.collapsed .invite-body { display: none; }
 .invite.collapsed .invite-reopen { display: flex; align-items: center; justify-content: center; gap: .6ch; }
 
+/* Header clickeable para cerrar la sección (útil al compartir pantalla en vivo) */
+.invite-collapse {
+    display: flex; align-items: center; justify-content: center; gap: .6ch;
+    width: 100%; background: transparent; border: none; cursor: pointer;
+    color: var(--accent); padding: .1rem .2rem; margin-bottom: .4rem;
+    font-family: var(--font-mono);
+}
+.invite-collapse .section-eyebrow { margin: 0; }
+.invite-collapse:hover { opacity: .8; }
+
+/* Guardar el QR (con la marca Hidr4lisk_ en el centro) como imagen PNG */
+.qr-save-btn {
+    display: block; margin: -.4rem auto .2rem; cursor: pointer;
+    background: transparent; border: none; color: var(--text-secondary);
+    font-family: var(--font-mono); font-size: var(--t-xs, .75rem);
+    letter-spacing: .1em; text-transform: uppercase; padding: .3rem .5rem;
+    transition: color var(--dur-fast, 150ms);
+}
+.qr-save-btn:hover { color: var(--accent); }
+
 /* QR + logo central */
 .qr-wrap { position: relative; width: 200px; margin: .6rem auto 1rem; }
 .qr {
