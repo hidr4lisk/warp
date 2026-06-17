@@ -41,7 +41,6 @@ const APP_I18N = {
         start_title: 'Start a secure session',
         start_desc: 'Generate a session and share the link or QR. Whoever opens it joins instantly — encrypted end-to-end, nothing stored.',
         btn_create: 'CREATE SESSION',
-        nick_label: 'Your name',
         invite_title: '// INVITE A PEER',
         invite_desc: 'Send this link (or let them scan the QR). The key travels inside the link — never to any server.',
         btn_share: '↗ SHARE LINK',
@@ -85,7 +84,6 @@ const APP_I18N = {
         start_title: 'Iniciá una sesión segura',
         start_desc: 'Generá una sesión y compartí el link o el QR. El que lo abre entra al instante — cifrado de extremo a extremo, nada se guarda.',
         btn_create: 'CREAR SESIÓN',
-        nick_label: 'Tu nombre',
         invite_title: '// INVITAR A ALGUIEN',
         invite_desc: 'Mandá este link (o que escaneen el QR). La clave viaja dentro del link — nunca a un servidor.',
         btn_share: '↗ COMPARTIR LINK',
@@ -442,7 +440,7 @@ function parseHash() {
 function randomNick() { return 'Device-' + crypto.randomUUID().slice(0, 4).toUpperCase(); }
 
 async function createSession() {
-    nodeName = (document.getElementById('nick')?.value || '').trim() || randomNick();
+    nodeName = randomNick();
     warpSessionId = 'WARP-' + crypto.randomUUID();
     const keyBytes = generateSecretKeyBytes();
     cryptoKey = await importKeyRaw(keyBytes);

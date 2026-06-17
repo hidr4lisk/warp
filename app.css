@@ -34,7 +34,7 @@
 
 /* ── CLIENTE (marco terminal) ───────────────────────────────────────────── */
 .client {
-    max-width: 820px; margin: 0 auto; text-align: left;
+    max-width: 980px; margin: 0 auto; text-align: left;
     background: var(--bg-surface);
     border: 1px solid var(--border-strong);
     border-radius: 12px; overflow: hidden;
