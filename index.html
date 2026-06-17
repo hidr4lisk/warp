@@ -81,19 +81,18 @@
                                 <span data-i18n="invite_title">// INVITE A PEER</span> <span aria-hidden="true">▾</span>
                             </button>
                             <div class="invite-body">
-                                <button class="invite-collapse" id="invite-collapse" type="button">
-                                    <span class="section-eyebrow" data-i18n="invite_title">// INVITE A PEER</span> <span aria-hidden="true">▴</span>
-                                </button>
+                                <button class="invite-close" id="invite-close" type="button" aria-label="Close">×</button>
+                                <p class="section-eyebrow" data-i18n="invite_title">// INVITE A PEER</p>
                                 <p class="muted" data-i18n="invite_desc">Send this link or let them scan the QR.</p>
                                 <div class="qr-wrap">
                                     <div class="qr" id="qr" aria-label="Session QR code"></div>
                                     <span class="qr-logo">Hidr4lisk_</span>
                                 </div>
-                                <button id="qr-save-btn" class="qr-save-btn" type="button" data-i18n="btn_qr">⤓ SAVE QR</button>
                                 <input id="share-link" class="share-link" readonly aria-label="Session link">
                                 <div class="btn-row">
                                     <button id="share-btn" class="btn-primary" data-i18n="btn_share">↗ SHARE LINK</button>
                                     <button id="copy-btn" class="btn-ghost" data-i18n="btn_copy">⧉ COPY</button>
+                                    <button id="qr-save-btn" class="btn-ghost" data-i18n="btn_qr">⤓ SAVE QR</button>
                                 </div>
                             </div>
                         </div>

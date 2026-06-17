@@ -43,9 +43,9 @@ const APP_I18N = {
         btn_create: 'CREATE SESSION',
         invite_title: '// INVITE A PEER',
         invite_desc: 'Send this link (or let them scan the QR). The key travels inside the link — never to any server.',
-        btn_share: '↗ SHARE LINK',
+        btn_share: '↗ SHARE',
         btn_copy: '⧉ COPY',
-        btn_qr: '⤓ SAVE QR',
+        btn_qr: '⤓ QR',
         copied: 'Copied!',
         waiting: 'Waiting for peer to join…',
         peer_online: (n) => `● ${n} online`,
@@ -87,9 +87,9 @@ const APP_I18N = {
         btn_create: 'CREAR SESIÓN',
         invite_title: '// INVITAR A ALGUIEN',
         invite_desc: 'Mandá este link (o que escaneen el QR). La clave viaja dentro del link — nunca a un servidor.',
-        btn_share: '↗ COMPARTIR LINK',
+        btn_share: '↗ COMPARTIR',
         btn_copy: '⧉ COPIAR',
-        btn_qr: '⤓ GUARDAR QR',
+        btn_qr: '⤓ QR',
         copied: '¡Copiado!',
         waiting: 'Esperando que se una alguien…',
         peer_online: (n) => `● ${n} en línea`,
@@ -562,12 +562,12 @@ function wireUI() {
     document.getElementById('chat-input')?.addEventListener('keydown', e => { if (e.key === 'Enter') sendChat(); });
 
     // Invitar: al Compartir o Copiar, la sección se minimiza (deja de molestar); reabrible.
-    // El header también colapsa con un clic (útil al compartir pantalla en vivo: el QR
+    // La × arriba a la derecha la cierra a mano (útil al compartir pantalla en vivo: el QR
     // sigue visible si no copiás/compartís).
     const collapseInvite = () => document.getElementById('invite')?.classList.add('collapsed');
     document.getElementById('invite-reopen')?.addEventListener('click',
         () => document.getElementById('invite')?.classList.remove('collapsed'));
-    document.getElementById('invite-collapse')?.addEventListener('click', collapseInvite);
+    document.getElementById('invite-close')?.addEventListener('click', collapseInvite);
 
     // COMPARTIR usa el menú nativo (navigator.share); en escritorio no existe → ocultamos el
     // botón (caería en copyLink y sería un duplicado de COPIAR). COPIAR pasa a ocupar la fila.
