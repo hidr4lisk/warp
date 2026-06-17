@@ -266,3 +266,10 @@
     .foot__links { flex-shrink: 0; font-size: .8rem; gap: .35rem; }
     .foot__bottom { flex-direction: column; align-items: flex-start; gap: .4rem; }
 }
+
+/* ── Fix: nombre de archivo largo no ensancha el panel (ellipsis real) ──────── */
+/* Sin min-width:0, un nombre con nowrap empuja el ancho del grid/flex: en PC
+   agranda la columna del portal y achica el chat; en celu se sale de pantalla. */
+.room-grid > .panel { min-width: 0; }
+.xfer, .xfer-head, .xfer-name { min-width: 0; }
+.transfers { min-width: 0; }
