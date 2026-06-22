@@ -202,9 +202,10 @@
 .portal-hint {
     position: absolute; inset: 0; z-index: 2; display: flex; align-items: center; justify-content: center;
     text-align: center; padding: 0 16%; font-family: var(--font-mono); font-size: var(--t-xs, .75rem);
-    font-weight: 700; color: #2a0a45; letter-spacing: .02em; line-height: 1.4; pointer-events: none;
-    /* violeta oscuro con halo claro (faux-stroke) para que se lea sobre el verde del portal */
-    text-shadow: 0 0 2px #d8ffce, 0 0 3px #d8ffce, 0 0 5px rgba(216,255,206,.9), 0 1px 1px rgba(216,255,206,.9);
+    font-weight: 700; color: #fff; letter-spacing: .02em; line-height: 1.4; pointer-events: none;
+    /* texto blanco con contorno negro (faux-stroke) para que se lea sobre el verde del portal */
+    -webkit-text-stroke: 0.5px #000;
+    text-shadow: 0 0 2px #000, 0 0 3px #000, 1px 1px 1px #000, -1px 1px 1px #000, 1px -1px 1px #000, -1px -1px 1px #000;
 }
 .portal:hover, .portal:focus-visible { transform: scale(1.04); box-shadow: 0 0 0 2px rgba(182,255,58,.5), 0 0 60px rgba(57,211,83,.6); outline: none; }
 .portal.drag { transform: scale(1.1); box-shadow: 0 0 0 3px var(--p1), 0 0 80px rgba(182,255,58,.8); }
