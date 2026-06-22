@@ -109,7 +109,6 @@ body {
         inset: 0;
         z-index: -1;
         background: url("fondowarp.png") center / cover no-repeat;
-        opacity: 0.7;
     }
 }
 
