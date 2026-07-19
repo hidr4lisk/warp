@@ -1,6 +1,7 @@
 // ── Extra i18n keys not present in generator.js translations ────────
 const extraTranslations = {
     en: {
+        nav_motto:        '2026 - Knowledge is free',
         win_bar_msg:      'Windows GUI now available',
         win_bar_cta:      '↓ download',
         win_new_badge:    '// NEW RELEASE',
@@ -28,6 +29,7 @@ const extraTranslations = {
         about_p3: 'Close it — it\'s <span class="accent-word">gone</span>.',
     },
     es: {
+        nav_motto:        '2026 - El conocimiento es libre',
         win_bar_msg:      'GUI para Windows disponible',
         win_bar_cta:      '↓ descargar',
         win_new_badge:    '// NUEVO',

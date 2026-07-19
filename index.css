@@ -175,7 +175,30 @@ body::before {
     align-items: center;
     justify-content: space-between;
     gap: var(--s-4);
+    position: relative;   /* ancla del .gov-banner centrado */
 }
+
+/* Banner lema pirata — centrado absoluto en la top-bar. Bandera SVG (no emoji: Windows) + ★ de texto. Solo PC. */
+.gov-banner {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: var(--t-xs);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    white-space: nowrap;
+    pointer-events: none;
+}
+.gov-banner > span { display: inline-flex; align-items: center; line-height: 1; }
+.gov-banner .gov-flag svg { display: block; border-radius: 2px; box-shadow: 0 0 0 1px rgba(0, 0, 0, .18); }
+.gov-banner .gov-stars { color: #f5c518; letter-spacing: 3px; font-size: 13px; }
+@media (max-width: 1023px) { .gov-banner { display: none; } }
 
 .top-bar__left,
 .top-bar__right {
